@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model NewsLetter {
+  id    String @id @default(uuid())
+  email String
+}
+
+model ContactUs {
+  id      String @id @default(uuid())
+  email   String
+  name    String
+  subject String
+  body    String
+  phone   string?
+}
+
+model Admin {
+  id           String      @id @default(uuid())
+  name         String
+  email        String      @unique
+  password     String
+  role         Role
+  city         String?
+  phone        String?
+  status       AdminStatus @default(active)
+  AddressLine1 String?     @default("")
+  AddressLine2 String?     @default("")
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+enum Role {
+  administrator
+  city_admin
+  user
+}
+
+enum AdminStatus {
+  active
+  inactive
+}
